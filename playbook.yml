@@ -1,0 +1,10 @@
+- hosts: webservers
+
+  tasks:
+      - name: install redis server
+        apt: name=redis-server state=present update_cache=yes
+        become: yes
+
+      - name: remove redis server
+        apt: name=redis-server state=absent
+        become: yes
