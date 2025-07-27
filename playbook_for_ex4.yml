@@ -1,0 +1,21 @@
+- hosts: webservers
+  tasks:
+    - name: install webserver packages
+      apt: 
+        name:
+          - nginx
+          - nodejs
+          - git
+        state: latest 
+        update_cache: yes
+      become: yes
+      tags: [web, packages]
+    - name: create users 
+      user:
+        name: arya
+        state: present
+        shell: /bin/bash
+        home: /home/arya
+        create_home: yes
+        groups: docker,www-data
+        append: yes
