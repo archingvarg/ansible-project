@@ -17,5 +17,6 @@
         shell: /bin/bash
         home: /home/arya
         create_home: yes
-        groups: docker,www-data
+        groups: users
         append: yes
+      become: yes
