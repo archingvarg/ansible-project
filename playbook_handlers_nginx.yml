@@ -1,5 +1,7 @@
 - hosts: webservers
-  
+  vars:
+    nginx_port: 80
+    root_dir: /usr/share/nginx/html 
   tasks:
   
     - name: Install nginx
@@ -7,13 +9,13 @@
       become: yes
    
     - name: Copy index.html into nginx
-      copy: src=files/index.html dest=/usr/share/nginx/html/index.html
+      copy: src=files/index.html dest="{{root_dir}}/index.html"
       notify:
         - restart nginx
       become: yes
     
     - name: Copy config filex into nginx
-      copy: src=files/nginx.conf dest=/etc/nginx/nginx.conf
+      template: src=files/nginx.conf.j2 dest=/etc/nginx/nginx.conf
       notify:
         - restart nginx
       become: yes
