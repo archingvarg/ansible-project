@@ -1,0 +1,25 @@
+- hosts: webservers
+  vars:
+    users:
+      - test-user1
+      - test-user2
+  tasks:
+    - name: Create user
+      user:
+        name: "{{ item }}"
+        create_home: yes
+      loop: "{{ users }}"
+      become: yes
+      when: ansible_os_family == "Arch"
+    - name: Install Git
+      package: 
+        name: git
+        state: present
+        update_cache: yes
+      become: yes
+    - name: add gitconfig
+      template:
+        src: templates/gitconfig.j2
+        dest: /home/{{ item }}/.gitconfig
+      loop: "{{ users }}"
+      become: yes 
