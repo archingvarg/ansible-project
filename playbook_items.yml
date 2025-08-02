@@ -1,0 +1,35 @@
+- hosts: webservers
+  vars:
+    users:
+      - jaime
+      - sansa
+      - robert
+  tasks:
+    - name: Add users
+      user:
+        name: "{{ item }}"
+        create_home: yes
+      loop: "{{ users }}"
+      become: yes
+    - name: Add .gitconfig
+      template:
+        src: templates/gitconfig.j2
+        dest: /home/{{ item }}/.gitconfig
+        owner: "{{ item }}"
+      loop: "{{ users }}"
+      become: yes
+    - name: Create .ssh directory
+      file:
+        path: /home/{{ item }}/.ssh
+        state: directory
+        owner: "{{ item }}"
+      loop: "{{ users }}"
+      become: yes
+
+    - name: Add public key to authorized keys
+      authorized_key:
+        user: "{{ item }}"
+        state: present
+        key: "{{ lookup('file', 'files/id_rsa.pub') }}"
+      loop: "{{ users }}"
+      become: yes
