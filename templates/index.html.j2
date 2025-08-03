@@ -5,6 +5,7 @@
 </head>
 <body>
   <h1>{{ greeting | upper }}</h1>
-  <h2>{{ ansible_date_time.date }} </h2>
+  <pre><code> {{ cowsay_string.stdout }} </code></pre>
+  <h2>Deployed at {{ ansible_date_time.date }} </h2>
 </body>
 </html>

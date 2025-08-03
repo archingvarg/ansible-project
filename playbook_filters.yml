@@ -9,6 +9,18 @@
     greeting: "this is server {{ web1 }}"
 
   tasks:
+    - name: Install cowsay
+      package:
+        name: "{{ item }}"
+        state: present
+#        update_cache: yes
+      loop:
+        - cowsay
+        - nginx
+    - name: run cowsay
+      shell: |
+        bash -c '/usr/games/cowsay "This is server {{ ansible_fqdn }}"'
+      register: cowsay_string    
     - name: Render webz
       template:
         src: templates/index.html.j2
