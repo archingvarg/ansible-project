@@ -9,4 +9,7 @@
 - name: setup git
   import_tasks: git.yml
 
+- name: add ssh-keys
+  import_tasks: ssh_new.yml
+
 # tasks file for role_name

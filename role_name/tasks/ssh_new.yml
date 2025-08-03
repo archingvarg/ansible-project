@@ -1,0 +1,16 @@
+- name: Create .ssh directory
+  file:
+    path: /home/{{ item }}/.ssh
+    state: directory
+    owner: "{{ item }}"
+  loop: "{{ users_list }}"
+  become: yes
+
+- name: Add public key to authorized keys
+  authorized_key:
+    user: "{{ item }}"
+    state: present
+    key: "{{ lookup('file', 'files/id_rsa.pub') }}"
+  loop: "{{ users_list }}"
+  become: yes
+
