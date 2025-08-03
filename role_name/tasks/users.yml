@@ -1,0 +1,7 @@
+- name: Add users
+  become: yes
+  user:
+    name: "{{ item }}"
+    create_home: yes
+    password: "*"
+  loop: "{{ users_list }}"

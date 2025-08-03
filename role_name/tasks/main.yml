@@ -1,0 +1,12 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: install soft
+  import_tasks: software.yml
+
+- name: create users
+  import_tasks: users.yml
+
+- name: setup git
+  import_tasks: git.yml
+
+# tasks file for role_name

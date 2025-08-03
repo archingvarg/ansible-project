@@ -1,0 +1,6 @@
+#SPDX-License-Identifier: MIT-0
+---
+users_list:
+  - test_user5
+  - test_user6
+# defaults file for role_name
