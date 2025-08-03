@@ -1,0 +1,23 @@
+---
+- name: Deploy HTML page with server info
+  hosts: webservers
+  gather_facts: yes
+  become: yes  # Apply privilege escalation for the whole play
+
+  vars:
+    web1: "{{ ansible_default_ipv4.address }}"
+    greeting: "this is server {{ web1 }}"
+
+  tasks:
+    - name: Render webz
+      template:
+        src: templates/index.html.j2
+        dest: /usr/share/nginx/html/index.html
+      notify: restart nginx  # Correct indentation — same level as 'name' and 'template'
+
+  handlers:
+    - name: restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+      become: yes
